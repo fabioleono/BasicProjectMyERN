@@ -1,0 +1,15 @@
+const db = require("../models/index"); // requiero la coneccion a la base de datos
+const ctrl = {} // creo el objeto controlador
+
+// creo las funciones para ese controlador
+
+ctrl.root = (req, res, next) => {
+  //res.send('it works')
+  res.json({ conexion: "ok" });
+  console.log('ruta a la raiz ', req.url);
+  console.log('headers raiz ', req.headers);
+  
+};
+
+
+module.exports = ctrl
