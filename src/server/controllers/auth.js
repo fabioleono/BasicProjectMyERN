@@ -12,7 +12,7 @@ ctrlAuth.list = (req, res, next) => {
     
     if (!err) {
       res.status(200).json(data);
-      // console.log('tipo de dato', typeof(data))
+      console.log('tipo de dato', typeof(data))
     } else {
       console.log("Mysql Error: ", err);
 

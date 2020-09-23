@@ -35,9 +35,11 @@ app.use(express.urlencoded({extended:false})) // recibir datos de formularios y 
 
 
 // static Files, carpeta public
-//console.log(path.join(__dirname, "../../../", "public"));
+//console.log(path.join(__dirname, "../../../", "public")); // a la carpeta public
 
-app.use(express.static(path.join(__dirname, "../../../", "public"))); // Ej. localhost:3000/index.html
+// en la carpeta bundle se genera el codigo que se convierte del  FRONTEND con yarn build 
+app.use(express.static(path.join(__dirname, "../../../", "build"))); // Ej. localhost:3000/index.html
+//app.use(express.static(path.join(__dirname, "../../../", "public"))); // Ej. localhost:3000/index.html
 
 //app.use('public', express.static(path.join(__dirname, "../", "public"))); // aca en el browser los archivos publicos seran disponibles desde localhost:3000/public/index.html
 
