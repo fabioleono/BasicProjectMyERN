@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require("express");
 const morgan = require('morgan')
 const path = require('path')
 //const passport = require('passport')
@@ -13,9 +13,20 @@ const app = express()
 // requiero el archivo de configuracion de Passport y su estrategia
 //require('../Passport/local-auth');
 
-
 // Settings 
-app.set("port", process.env.PORT || 5000);
+if(process.env.LOCAL) {
+  app.set("port", process.env.PORT_LOCAL || 5000);
+}else{
+  if(process.env.CERT) {
+    app.set("port", process.env.PORT_REMOTE_HTTPS || 5001);
+  }else{
+    app.set("port", process.env.PORT_REMOTE || 5002);
+  }
+  
+}
+
+
+
 
 
 //middlewares
@@ -46,7 +57,7 @@ app.use(express.static(path.join(__dirname, "../../../", "build"))); // Ej. loca
 // Routes
 //require("../routes/index")(app); // si se envia una funcion desde el archivo index.js de routes, con parametro app. Modelo B
 app.use(require('../routes/index')) // accedo a las rutas del archivo index.js
-app.use(require('../routes/authentication')) // accedo a las rutas del archivo autentication.js
+//app.use(require('../routes/authentication')) // accedo a las rutas del archivo autentication.js
 //app.use('/Links', require('../routes/links')) // acceso a las rutas del archivo links.js, PERO en el dominio le van a preceder la ruta localhost:3000/Links
 
 //app.use(require('../routes/error')) // se puede generar una ruta para las rutas que no existan en la carpeta routes, y de esa ruta llamar un controller con la visualizacion del error. O si se prefiere se genera un middleware para generar un error y despues especificar en el una respuesta en un archivo estatico html 
