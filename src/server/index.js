@@ -5,7 +5,7 @@ const http = require("http");
 const https = require("https");
 
 
-if(process.env.LOCAL){
+if(process.env.LOCAL==='true'){
 
   async function init() {
     await app.listen(app.get("port"));
@@ -17,7 +17,7 @@ if(process.env.LOCAL){
 }else{
   let httpServer
   // AWS SERVER, Certificate CertBot
-  if (process.env.CERT) {
+  if (process.env.CERT==='true') {
     const privateKey = fs.readFileSync(
       "/etc/letsencrypt/live/enabletech.tech/privkey.pem",
       "utf8"

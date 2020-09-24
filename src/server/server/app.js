@@ -14,10 +14,10 @@ const app = express()
 //require('../Passport/local-auth');
 
 // Settings 
-if(process.env.LOCAL) {
+if(process.env.LOCAL==='true') {
   app.set("port", process.env.PORT_LOCAL || 5000);
 }else{
-  if(process.env.CERT) {
+  if(process.env.CERT==='true') {
     app.set("port", process.env.PORT_REMOTE_HTTPS || 5001);
   }else{
     app.set("port", process.env.PORT_REMOTE || 5002);
