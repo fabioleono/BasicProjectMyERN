@@ -6,8 +6,10 @@ const path = require('path')
 //const favicon = require('serve-favicon')
 //const creatError = require('http-errors')
 
-//const engine = require('react-engine') // server side rendering
-
+ const fs = require("fs");
+// const http = require("http");
+// const https = require("https");
+//let httpServer
 // Initializations
 const app = express()
 // requiero el archivo de configuracion de Passport y su estrategia
@@ -16,18 +18,37 @@ const app = express()
 // Settings 
 if(process.env.LOCAL==='true') {
   app.set("port", process.env.PORT_LOCAL || 5000);
+  app.set("credentials", {})
 }else{
+
   if(process.env.CERT==='true') {
+        
+    const privateKey = fs.readFileSync(
+      "/etc/letsencrypt/live/enabletech.tech/privkey.pem",
+      "utf8"
+    );
+    const certificate = fs.readFileSync(
+      "/etc/letsencrypt/live/enabletech.tech/cert.pem",
+      "utf8"
+    );
+    const ca = fs.readFileSync(
+      "/etc/letsencrypt/live/enabletech.tech/chain.pem",
+      "utf8"
+    );
+
+    const credentials = {
+      key: privateKey,
+      cert: certificate,
+      ca: ca,
+    };
     app.set("port", process.env.PORT_REMOTE_HTTPS || 5001);
+    app.set("credentials", credentials);
   }else{
     app.set("port", process.env.PORT_REMOTE || 5002);
+    app.set("credentials", {});
   }
   
 }
-
-
-
-
 
 //middlewares
 //app.use(favicon(path.join(__dirname, "../", "public/images/favicon.png")));
