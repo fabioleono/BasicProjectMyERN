@@ -6,7 +6,9 @@ const ctrl = {} // creo el objeto controlador
 ctrl.root = (req, res, next) => {
   //res.send('it works')
   res.status(200).json({ conexion: "ok" });
-  console.log("respuesta / ", req.url);
+  // console.log("respuesta desde / ", req.url);
+  // console.log('vhost ', req.vhost);
+  
   // res.json({ conexion: "ok" });
   // console.log('ruta a la raiz ', req.url);
   // console.log('headers raiz ', req.headers);

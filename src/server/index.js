@@ -1,38 +1,26 @@
 require('dotenv').config() // trae las variables del archivo .env de la raiz
 const app = require('./server/app')
-const appMobile = require("./server/appMobile");
-const http = require("http");
-const https = require("https");
-const vhost = require("vhost");
+const vhttps = require('vhttps')
 
-console.log(app.get("credentials"));
-let httpServer;
 
-if(process.env.LOCAL==='true'){
-  httpServer = app
-}else{
-  if(process.env.CERT==='true'){
-    httpServer = https.createServer(app.get("credentials"), app);
-  }else{
-    httpServer = http.createServer(app);
-  }
-}
 
-// httpServer.listen(app.get("port"), () => {
-//   console.log("server on port: ", app.get("port"));
-// });
+if (process.env.CERT === "true") {
+  const cred = require("./server/vhost/credentials");
+  const httpsServer = vhttps.createServer(
+    cred.default,
+    [cred.wc1, cred.wc2, cred.wc3],
+    app
+  );
 
-httpServer
-  .use(vhost("mobile.enabletech.tech", appMobile))
-  .listen(app.get("port"), () => {
+  httpsServer.listen(app.get("port"), () => {
     console.log("server on port: ", app.get("port"));
   });
-// var vhost = require("vhost");
+} else {
+  app.listen(app.get("port"), () => {
+    console.log("server on port: ", app.get("port"));
+  });
+}
 
-// express()
-//   .use(vhost("m.mysite.com", require("/path/to/m").app))
-//   .use(vhost("sync.mysite.com", require("/path/to/sync").app))
-//   .listen(80); 
 
 
 
